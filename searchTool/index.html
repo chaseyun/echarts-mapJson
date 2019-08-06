@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        fieldset{
+            width: 420px;
+            height: 80px;
+            margin: 20px auto;
+            border: 1px solid #666666;
+            padding: 20px;
+        }
+        legend{
+            margin-left: 20px;
+            font-size: 16px;
+        }
+        label{
+            display: block;
+            height: 28px;
+            font-size: 14px;
+            line-height: 28px;
+            margin: 10px 0;
+            float: left;
+        }
+        input{
+            display: block;
+            width: 300px;
+            height: 28px;
+            font-size: 14px;
+            line-height: 28px;
+            margin: 10px 0;
+            float: left;
+            text-indent: 10px;
+        }
+        .message{
+            width: 420px;
+            padding: 0 20px;
+            margin: 0 auto;
+            height: auto;
+        }
+    </style>
+    <title>搜索对照工具</title>
+</head>
+<body>
+    <fieldset>
+        <legend>行政区代码与名称对照工具</legend>
+        <label for="">行政区代码：</label>
+        <input id="code" type="text" placeholder="请输入两位行政区代码">
+    </fieldset>
+    <div class="message"></div>
+    <script>
+        function Dictionary(){
+            this.datastore = new Array();
+            this.add = (key,value) =>{
+                this.datastore[key] = value;
+            };
+            this.find = (key) =>{
+                return this.datastore[key];
+            };
+            this.remove = (key) =>{
+                delete this.datastore[key];
+            };
+            this.showAll = () =>{
+                for(let key in Object.keys[this.datastore]){
+                    console.log(key + " -> " + this.datastore[key]);
+                }
+            }
+        }
+
+        let administrativeRegionList = new Dictionary();
+
+        administrativeRegionList.add("11","北京市");
+        administrativeRegionList.add("12","天津市");
+        administrativeRegionList.add("13","河北省");
+        administrativeRegionList.add("14","山西省");
+        administrativeRegionList.add("15","内蒙古自治区");
+        administrativeRegionList.add("21","辽宁省");
+        administrativeRegionList.add("22","吉林省");
+        administrativeRegionList.add("23","黑龙江省");
+        administrativeRegionList.add("31","上海市");
+        administrativeRegionList.add("32","江苏省");
+        administrativeRegionList.add("33","浙江省");
+        administrativeRegionList.add("34","安徽省");
+        administrativeRegionList.add("35","福建省");
+        administrativeRegionList.add("36","江西省");
+        administrativeRegionList.add("37","山东省");
+        administrativeRegionList.add("41","河南省");
+        administrativeRegionList.add("42","湖北省");
+        administrativeRegionList.add("43","湖南省");
+        administrativeRegionList.add("44","广东省");
+        administrativeRegionList.add("45","广西壮族自治区");
+        administrativeRegionList.add("46","海南省");
+        administrativeRegionList.add("50","重庆市");
+        administrativeRegionList.add("51","四川省");
+        administrativeRegionList.add("52","贵州省");
+        administrativeRegionList.add("53","云南省");
+        administrativeRegionList.add("54","西藏自治区");
+        administrativeRegionList.add("61","陕西省");
+        administrativeRegionList.add("62","甘肃省");
+        administrativeRegionList.add("63","青海省");
+        administrativeRegionList.add("64","宁夏回族自治区");
+        administrativeRegionList.add("65","新疆维吾尔自治区");
+        administrativeRegionList.add("71","台湾省");
+        administrativeRegionList.add("81","香港特别行政区");
+        administrativeRegionList.add("82","澳门特别行政区");
+
+        let code = document.querySelector('#code');
+        let wrap = document.querySelector('.message');
+        //console.log(code);
+        code.onfocus = () =>{
+            window.onkeyup = () =>{
+                let regExp = new RegExp('^[1-8]{2}$','g');
+               
+                if(regExp.test(code.value)){
+                    let result = administrativeRegionList.find(code.value);
+                    if(result !== undefined){
+                        wrap.innerHTML = "行政区编码" + code.value + "对应的地区名称为：" + result;
+                        console.log(result);
+                    }else{
+                        wrap.innerHTML = "请输入正确的两位省级行政区编码！";
+                    }        
+                }else{
+                   wrap.innerHTML = "请输入正确的两位省级行政区编码！";
+                }
+            }
+            
+        }
+    </script>
+</body>
+</html>
